@@ -48,6 +48,8 @@ def post_comment(request, content_type_id, object_id, form_class=CommentForm):
                     "comment": comment
                 }, context_instance=RequestContext(request))
             }), content_type="application/json")
+        form = form_class()
+        comment = form.save()
     else:
         if request.is_ajax():
             return HttpResponse(json.dumps({
