@@ -2,6 +2,9 @@ from django.conf.urls import url
 
 from . import views
 
+app_name = "dialogos"
+
+
 urlpatterns = [
     url(r'^comment/(?P<content_type_id>\d+)/(?P<object_id>\d+)/$',
         views.post_comment, name='post_comment'),

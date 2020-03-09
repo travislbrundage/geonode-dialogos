@@ -73,8 +73,7 @@ class CommentTests(TestCaseMixin, TestCase):
         self.assertEqual(tmpl.render(context), value)
 
     def post_comment(self, obj, data):
-        return self.post(
-            "post_comment",
+        return self.post("dialogos:post_comment",
             content_type_id=ContentType.objects.get_for_model(obj).pk,
             object_id=obj.pk,
             data=data
@@ -119,17 +118,17 @@ class CommentTests(TestCaseMixin, TestCase):
             })
             comment = Comment.objects.get()
 
-        response = self.post("delete_comment", comment_id=comment.pk)
+        response = self.post("dialogos:delete_comment", comment_id=comment.pk)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Comment.objects.count(), 1)
 
         with self.login("aragorn", "strider"):
-            response = self.post("delete_comment", comment_id=comment.pk)
+            response = self.post("dialogos:delete_comment", comment_id=comment.pk)
             self.assertEqual(response.status_code, 302)
             self.assertEqual(Comment.objects.count(), 1)
 
         with self.login("gimli", "gloin"):
-            response = self.post("delete_comment", comment_id=comment.pk)
+            response = self.post("dialogos:delete_comment", comment_id=comment.pk)
             self.assertEqual(response.status_code, 302)
             self.assertEqual(Comment.objects.count(), 0)
 
